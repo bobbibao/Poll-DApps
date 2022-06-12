@@ -1,0 +1,111 @@
+{% extends 'home/base.html' %}
+{% block title %} Add {% endblock title %}
+
+{% block nav %}
+<ul class="nav">
+    <li class="">
+        <a href="{% url 'index' %}">
+            <i class="tim-icons icon-chart-pie-36"></i>
+            <p>Dashboard</p>
+        </a>
+    </li>
+    {% if user.is_authenticated %}
+    <li>
+        <a href="{% url 'poll' %} ">
+            <i class="tim-icons icon-atom"></i>
+            <p>Add Poll</p>
+        </a>
+    </li>
+    {% endif %}
+    <li>
+        <a href="{% url 'view' %}">
+            <i class="tim-icons icon-pin"></i>
+            <p>View</p>
+        </a>
+    </li>
+    {% comment %} <li>
+        <a href="#">
+            <i class="tim-icons icon-bell-55"></i>
+            <p>Notifications</p>
+        </a>
+    </li> {% endcomment %}
+    {% if user.is_authenticated %}
+    <li class="">
+        <a href="{% url 'profile' user.username %}">
+            <i class="tim-icons icon-single-02"></i>
+            <p>User Profile</p>
+        </a>
+    </li>
+    {% endif %}
+
+    {% comment %} </li>
+    <li>
+        <a href="#">
+            <i class="tim-icons icon-puzzle-10"></i>
+            <p>Table List</p>
+        </a>
+    </li> {% endcomment %}
+
+    {% comment %} <li>
+        <a href="#">
+            <i class="tim-icons icon-align-center"></i>
+            <p>Typography</p>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="tim-icons icon-world"></i>
+            <p>RTL Support</p>
+        </a>
+    </li>
+    <li class="active-pro">
+        <a href="#">
+            <i class="tim-icons icon-spaceship"></i>
+            <p>Upgrade to PRO</p>
+        </a>
+    </li> {% endcomment %}
+    <li class="">
+        <a href="{% url 'icons' %}">
+            <i class="tim-icons icon-atom"></i>
+            <p>Icons</p>
+        </a>
+    </li>
+</ul>
+{% endblock nav %}
+{% block content %}
+<div class="content">
+    <div class="row center">
+        <div class="col-md-6 offset-md-3">
+            {% if edit_choice %}
+            <h2>Update choice</h2>
+            {% else %}
+            <h2>Add new choice</h2>
+            {% endif %}
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+                {% endfor %}
+                {% if edit_choice %}
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a class="btn btn-danger" href="{% url 'polls:choice_delete' choice.id %}" role="button"
+                    onclick="return confirm('Are you sure you want to delete this?')">Delete</a>
+                {% else %}
+                <button type="submit" class="btn btn-primary">Add</button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

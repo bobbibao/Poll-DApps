@@ -1,0 +1,106 @@
+{% extends 'home/base.html' %}
+
+{% block title %} Poll-Detail {% endblock title %}
+
+{% block nav %}
+<ul class="nav">
+    <li class="">
+        <a href="{% url 'index' %}">
+            <i class="tim-icons icon-chart-pie-36"></i>
+            <p>Dashboard</p>
+        </a>
+    </li>
+    {% if user.is_authenticated %}
+    <li>
+        <a href="{% url 'poll' %} ">
+            <i class="tim-icons icon-atom"></i>
+            <p>Add Poll</p>
+        </a>
+    </li>
+    {% endif %}
+    <li>
+        <a href="{% url 'view' %}">
+            <i class="tim-icons icon-pin"></i>
+            <p>View</p>
+        </a>
+    </li>
+    {% comment %} <li>
+        <a href="#">
+            <i class="tim-icons icon-bell-55"></i>
+            <p>Notifications</p>
+        </a>
+    </li> {% endcomment %}
+    {% if user.is_authenticated %}
+    <li class="">
+        <a href="{% url 'profile' user.username %}">
+            <i class="tim-icons icon-single-02"></i>
+            <p>User Profile</p>
+        </a>
+    </li>
+    {% endif %}
+
+    {% comment %} </li>
+    <li>
+        <a href="#">
+            <i class="tim-icons icon-puzzle-10"></i>
+            <p>Table List</p>
+        </a>
+    </li> {% endcomment %}
+
+    {% comment %} <li>
+        <a href="#">
+            <i class="tim-icons icon-align-center"></i>
+            <p>Typography</p>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="tim-icons icon-world"></i>
+            <p>RTL Support</p>
+        </a>
+    </li>
+    <li class="active-pro">
+        <a href="#">
+            <i class="tim-icons icon-spaceship"></i>
+            <p>Upgrade to PRO</p>
+        </a>
+    </li> {% endcomment %}
+    <li class="">
+        <a href="{% url 'icons' %}">
+            <i class="tim-icons icon-atom"></i>
+            <p>Icons</p>
+        </a>
+    </li>
+</ul>
+{% endblock nav %}
+{% block content %}
+<div class="content">
+    <div class="offset-md-3">
+        <h1>Polls details page</h1>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <hr>
+        <h2 class="mt-3 mb-3">{{ poll }}</h2>
+        <form action="{% url 'vote' poll.id %}" method="POST">
+            {% csrf_token %}
+            {% for choice in poll.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+            <br>
+            {% endfor %}
+            <input type="submit" value="Vote" class="btn btn-primary mt-3">
+            <a class="btn btn-warning mt-3" href="{% url 'view' %}" role="button">Cancel</a>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
