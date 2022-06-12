@@ -15,20 +15,6 @@ from django.contrib import messages
 import re
 from .models import *
 
-# importing the necessary libraries
-from django.http import HttpResponse
-from django.views.generic import View
-from .process import html_to_pdf 
-
-#Creating a class based view
-class GeneratePdf(View):
-     def get(self, request, *args, **kwargs):
-         
-        # getting the template
-        pdf = html_to_pdf('result.html')
-         
-         # rendering the template
-        return HttpResponse(pdf, content_type='application/pdf')
 def register(request):
     if request.method == "POST":
         username = request.POST["username"]
