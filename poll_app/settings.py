@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%cb6aypac-ak+s#&*e837h%hg+24day2^%d6l8gk#npx5dd)f^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['poll-dapps.azurewebsites.net','poll-app-nw.herokuapp.com', '127.0.0.1','poll-dapps.azurewebsites.net']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
