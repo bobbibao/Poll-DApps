@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'Poll-DApps'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6C0EFFB95FEF44A1A02510DF337E378A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_48AD88587A27464ABF4B79600A34A6A8 }}
