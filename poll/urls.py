@@ -5,13 +5,12 @@ from django.conf.urls.static import static
 from .views import Login, Logout, poll_detail, icons, register, \
 poll,search, index, view, profile, vote,end, result,\
 back, edit, add, delete, add_choice
-from .views import GeneratePdf
+
 urlpatterns = [
     path('login/', Login.as_view(), name = "login"),
     path('logout/', Logout.as_view(), name = "logout"),
     path('register/', register, name = "register"),
     path('poll/', poll, name = "poll"),
-    path('pdf/', GeneratePdf.as_view()), 
     path('search/', search, name="search"),
     path('', view, name="index"),
     path('view/', view, name="view"),
